@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -69,14 +69,7 @@
 }
 
 :root {
-  --button-outline: rgba(0,0,0, .10);
-  --badge-outline: rgba(0,0,0, .05);
-  --opaque-button-border-intensity: -8;
-  --elevate-1: rgba(0,0,0, .03);
-  --elevate-2: rgba(0,0,0, .08);
-
-  /* Deep Indigo and Crisp White Theme for clinical confidence */
-  --background: 220 33% 98%;
+  --background: 223 35% 97%; /* #F5F7FB */
   --foreground: 224 71% 4%;
   --border: 220 13% 91%;
   
@@ -84,20 +77,20 @@
   --card-foreground: 224 71% 4%;
   --card-border: 220 13% 91%;
   
-  --sidebar: 0 0% 100%;
-  --sidebar-foreground: 224 71% 4%;
-  --sidebar-border: 220 13% 91%;
-  --sidebar-primary: 244 47% 20%;
-  --sidebar-primary-foreground: 210 40% 98%;
-  --sidebar-accent: 220 14% 96%;
-  --sidebar-accent-foreground: 220.9 39.3% 11%;
-  --sidebar-ring: 244 47% 20%;
+  --sidebar: 227 35% 15%; /* #1A2035 */
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-border: 227 35% 12%;
+  --sidebar-primary: 229 90% 64%; /* #4F6EF7 */
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 227 35% 22%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-ring: 229 90% 64%;
 
   --popover: 0 0% 100%;
   --popover-foreground: 224 71% 4%;
   --popover-border: 220 13% 91%;
 
-  --primary: 244 47% 20%;
+  --primary: 229 90% 64%; /* #4F6EF7 */
   --primary-foreground: 210 40% 98%;
   
   --secondary: 220 14% 96%;
@@ -113,28 +106,20 @@
   --destructive-foreground: 210 40% 98%;
 
   --input: 220 13% 91%;
-  --ring: 244 47% 20%;
+  --ring: 229 90% 64%;
   
-  --chart-1: 244 47% 20%;
-  --chart-2: 199 89% 48%;
+  --chart-1: 229 90% 64%;
+  --chart-2: 173 58% 39%;
   --chart-3: 142 71% 45%;
   --chart-4: 43 74% 66%;
   --chart-5: 0 84% 60%;
 
   --app-font-sans: 'Inter', sans-serif;
   --app-font-serif: Georgia, serif;
-  --app-font-mono: 'Space Mono', monospace;
-  --app-font-display: 'Syne', sans-serif;
+  --app-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --app-font-display: 'Inter', sans-serif;
   
-  --radius: 0.25rem;
-  
-  --sidebar-primary-border: hsl(var(--sidebar-primary));
-  --sidebar-accent-border: hsl(var(--sidebar-accent));
-  --primary-border: hsl(var(--primary));
-  --secondary-border: hsl(var(--secondary));
-  --muted-border: hsl(var(--muted));
-  --accent-border: hsl(var(--accent));
-  --destructive-border: hsl(var(--destructive));
+  --radius: 0.5rem;
 }
 
 .dark {

@@ -13,10 +13,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Link } from "wouter";
-import { Users, Plus, Loader2, Search, Filter, Award } from "lucide-react";
+import { Users, Plus, Loader2, Search, Filter, Award, Eye, MoreHorizontal } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const candidateSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -64,23 +65,49 @@ export function Candidates() {
     c.email.toLowerCase().includes(search.toLowerCase())
   ).sort((a, b) => b.overallScore - a.overallScore);
 
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'shortlisted': return 'bg-emerald-100 text-emerald-700';
+      case 'rejected': return 'bg-red-100 text-red-700';
+      case 'analyzed': return 'bg-blue-100 text-blue-700';
+      default: return 'bg-amber-100 text-amber-700'; // pending
+    }
+  };
+
+  const getAvatarColor = (name: string) => {
+    const colors = ['bg-blue-100 text-blue-700', 'bg-teal-100 text-teal-700', 'bg-violet-100 text-violet-700', 'bg-orange-100 text-orange-700', 'bg-pink-100 text-pink-700'];
+    const index = name.length % colors.length;
+    return colors[index];
+  };
+
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-6 rounded-xl shadow-sm border border-slate-100 gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight mb-1" data-testid="text-candidates-title">Talent Pool</h1>
-          <p className="text-muted-foreground" data-testid="text-candidates-subtitle">Review, analyze, and shortlist candidates across all requisitions.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-800" data-testid="text-candidates-title">Applications</h1>
+          <p className="text-slate-500 text-sm mt-1" data-testid="text-candidates-subtitle">Review, analyze, and manage candidates.</p>
         </div>
         
-        <div className="flex items-center gap-4">
-          <div className="flex items-center space-x-2 bg-muted/50 p-2 rounded-md border">
-            <Switch id="blind-mode" checked={blindMode} onCheckedChange={setBlindMode} />
-            <Label htmlFor="blind-mode" className="font-medium cursor-pointer">Blind Hiring Mode</Label>
+        <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
+          <div className="relative flex-1 md:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Input 
+              placeholder="Search candidates..." 
+              className="pl-9 bg-slate-50 border-slate-200 rounded-lg" 
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              disabled={blindMode}
+            />
+          </div>
+
+          <div className="flex items-center space-x-2 bg-slate-50 p-2 px-3 rounded-lg border border-slate-200">
+            <Switch id="blind-mode" checked={blindMode} onCheckedChange={setBlindMode} className="data-[state=checked]:bg-blue-600" />
+            <Label htmlFor="blind-mode" className="font-semibold text-sm cursor-pointer text-slate-700">Blind Mode</Label>
           </div>
           
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button data-testid="button-add-candidate">
+              <Button data-testid="button-add-candidate" className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
                 <Plus className="w-4 h-4 mr-2" /> Add Candidate
               </Button>
             </DialogTrigger>
@@ -122,7 +149,7 @@ export function Candidates() {
                         <FormMessage />
                       </FormItem>
                     )} />
-                    <Button type="submit" className="w-full mt-2" disabled={createCandidate.isPending}>
+                    <Button type="submit" className="w-full mt-2 bg-blue-600" disabled={createCandidate.isPending}>
                       {createCandidate.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                       Submit for Analysis
                     </Button>
@@ -134,76 +161,101 @@ export function Candidates() {
         </div>
       </div>
 
-      <div className="flex items-center gap-2 mb-4">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder="Search candidates..." 
-            className="pl-9" 
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            disabled={blindMode}
-          />
-        </div>
-      </div>
-
-      {isLoading ? (
-        <div className="space-y-3">
-          {[1,2,3,4].map(i => <Skeleton key={i} className="h-20 w-full" />)}
-        </div>
-      ) : filteredCandidates?.length ? (
-        <div className="space-y-3">
-          {filteredCandidates.map(candidate => {
-            const job = jobs?.find(j => j.id === candidate.jobId);
-            
-            return (
-              <Card key={candidate.id} className="hover:border-primary/50 transition-colors" data-testid={`card-cand-${candidate.id}`}>
-                <CardContent className="p-4 flex items-center justify-between">
-                  <div className="flex items-center gap-4 flex-1">
-                    <div className="h-10 w-10 rounded bg-secondary flex items-center justify-center font-display font-bold text-secondary-foreground shrink-0">
-                      {blindMode ? `C${candidate.id}` : candidate.name.charAt(0)}
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <Link href={`/candidates/${candidate.id}`} className="font-semibold text-lg hover:underline">
-                          {blindMode ? `Candidate #${candidate.id}` : candidate.name}
-                        </Link>
-                        {candidate.verifiedProofOfWork && !blindMode && (
-                          <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 gap-1 px-1.5 py-0 items-center">
-                            <Award className="w-3 h-3" /> PoW Verified
-                          </Badge>
-                        )}
+      <Card className="shadow-sm border-0 overflow-hidden">
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead className="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-100">
+                <tr>
+                  <th className="px-6 py-4 font-semibold">Candidate</th>
+                  <th className="px-6 py-4 font-semibold">Job Title</th>
+                  <th className="px-6 py-4 font-semibold">Status</th>
+                  <th className="px-6 py-4 font-semibold">Scores</th>
+                  <th className="px-6 py-4 font-semibold text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {isLoading ? (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-8 text-center">
+                      <Loader2 className="w-8 h-8 animate-spin text-slate-300 mx-auto mb-2" />
+                      <p className="text-slate-500">Loading candidates...</p>
+                    </td>
+                  </tr>
+                ) : filteredCandidates?.length ? (
+                  filteredCandidates.map(candidate => {
+                    const job = jobs?.find(j => j.id === candidate.jobId);
+                    const displayName = blindMode ? `Candidate #${candidate.id}` : candidate.name;
+                    const initial = blindMode ? 'C' : candidate.name.charAt(0);
+                    
+                    return (
+                      <tr key={candidate.id} className="bg-white border-b border-slate-100 hover:bg-slate-50/80 transition-colors" data-testid={`row-cand-${candidate.id}`}>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <Avatar className="h-10 w-10 border border-white shadow-sm">
+                              <AvatarFallback className={`${getAvatarColor(candidate.name)} font-bold`}>
+                                {initial}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <Link href={`/candidates/${candidate.id}`} className="font-bold text-slate-800 hover:text-blue-600 block">
+                                {displayName}
+                              </Link>
+                              {!blindMode && candidate.verifiedProofOfWork && (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-600 mt-0.5">
+                                  <Award className="w-3 h-3" /> PoW Verified
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-slate-600 font-medium">
+                          {job?.title || "Unknown Role"}
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${getStatusColor(candidate.status)}`}>
+                            {candidate.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-4">
+                            <div title="Overall Score">
+                              <span className="text-slate-800 font-bold">{candidate.overallScore}</span>
+                              <span className="text-slate-400 text-xs ml-1">/100</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <Link href={`/candidates/${candidate.id}`}>
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-slate-400 hover:text-blue-600 hover:bg-blue-50">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                            </Link>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-slate-400 hover:text-slate-700">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-16 text-center">
+                      <div className="bg-slate-50 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <Users className="w-8 h-8 text-slate-300" />
                       </div>
-                      <div className="text-sm text-muted-foreground">
-                        {job?.title || "Unknown Role"} • {candidate.status}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-8 px-4">
-                    <div className="flex flex-col items-end">
-                      <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Overall</span>
-                      <span className="font-mono text-xl font-bold">{candidate.overallScore}</span>
-                    </div>
-                    <div className="flex flex-col items-end">
-                      <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Velocity</span>
-                      <span className="font-mono text-xl font-bold text-blue-600 dark:text-blue-400">{candidate.velocityScore}</span>
-                    </div>
-                    <div className="flex flex-col items-end">
-                      <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Synergy</span>
-                      <span className="font-mono text-xl font-bold text-purple-600 dark:text-purple-400">{candidate.skillSynergyScore}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-      ) : (
-        <div className="text-center py-12 text-muted-foreground border rounded-lg border-dashed">
-          No candidates found.
-        </div>
-      )}
+                      <p className="text-slate-500 font-medium">No candidates found.</p>
+                      <p className="text-slate-400 text-sm mt-1">Try adjusting your filters or search query.</p>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
