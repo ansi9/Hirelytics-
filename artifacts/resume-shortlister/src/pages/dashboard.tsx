@@ -100,7 +100,7 @@ export function Dashboard() {
               </div>
             ) : topCandidates?.length ? (
               <div className="space-y-1 mt-2">
-                {topCandidates.slice(0, 5).map((candidate, i) => (
+                {topCandidates.slice(0, 3).map((candidate, i) => (
                   <div key={candidate.candidateId} className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition-colors">
                     <div className="flex items-center gap-3">
                       <Avatar className="h-10 w-10 border border-slate-100">
@@ -150,7 +150,7 @@ export function Dashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {topCandidates?.slice(0, 5).map((candidate, i) => (
+                  {topCandidates?.slice(0, 4).map((candidate, i) => (
                     <tr key={candidate.candidateId} className="bg-white border-b hover:bg-slate-50">
                       <td className="px-6 py-4 text-slate-500 font-medium">#{(i + 1).toString().padStart(3, '0')}</td>
                       <td className="px-6 py-4 font-semibold text-slate-800 flex items-center gap-2">

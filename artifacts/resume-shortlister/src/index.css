@@ -68,99 +68,115 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* ─── LIGHT MODE — Beige (#DDD0C8) + Dark Grey (#323232) ─── */
 :root {
-  --background: 223 35% 97%; /* #F5F7FB */
-  --foreground: 224 71% 4%;
-  --border: 220 13% 91%;
-  
-  --card: 0 0% 100%;
-  --card-foreground: 224 71% 4%;
-  --card-border: 220 13% 91%;
-  
-  --sidebar: 227 35% 15%; /* #1A2035 */
-  --sidebar-foreground: 0 0% 100%;
-  --sidebar-border: 227 35% 12%;
-  --sidebar-primary: 229 90% 64%; /* #4F6EF7 */
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 227 35% 22%;
-  --sidebar-accent-foreground: 0 0% 100%;
-  --sidebar-ring: 229 90% 64%;
+  /* Page background: warm beige */
+  --background: 28 22% 84%; /* #DDD0C8 */
+  --foreground: 0 0% 20%;   /* #323232 */
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 224 71% 4%;
-  --popover-border: 220 13% 91%;
+  --border: 28 15% 75%;
+  --input: 28 15% 78%;
+  --ring: 0 0% 20%;
 
-  --primary: 229 90% 64%; /* #4F6EF7 */
-  --primary-foreground: 210 40% 98%;
-  
-  --secondary: 220 14% 96%;
-  --secondary-foreground: 220.9 39.3% 11%;
-  
-  --muted: 220 14% 96%;
-  --muted-foreground: 220 8.9% 46.1%;
-  
-  --accent: 220 14% 96%;
-  --accent-foreground: 220.9 39.3% 11%;
-  
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
+  /* Cards: slightly lighter than bg, cream-white */
+  --card: 30 30% 92%;        /* warm cream */
+  --card-foreground: 0 0% 20%;
+  --card-border: 28 15% 80%;
 
-  --input: 220 13% 91%;
-  --ring: 229 90% 64%;
-  
-  --chart-1: 229 90% 64%;
+  --popover: 30 30% 94%;
+  --popover-foreground: 0 0% 20%;
+  --popover-border: 28 15% 78%;
+
+  /* Primary: dark grey as the action color */
+  --primary: 0 0% 20%;       /* #323232 */
+  --primary-foreground: 30 25% 94%;
+
+  --secondary: 28 18% 88%;
+  --secondary-foreground: 0 0% 25%;
+
+  --muted: 28 15% 88%;
+  --muted-foreground: 0 0% 45%;
+
+  --accent: 28 18% 85%;
+  --accent-foreground: 0 0% 20%;
+
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 98%;
+
+  /* Sidebar: dark grey (#323232) */
+  --sidebar: 0 0% 20%;
+  --sidebar-foreground: 30 20% 92%;
+  --sidebar-border: 0 0% 16%;
+  --sidebar-primary: 28 60% 65%;   /* warm tan/sand for active items */
+  --sidebar-primary-foreground: 0 0% 10%;
+  --sidebar-accent: 0 0% 26%;
+  --sidebar-accent-foreground: 30 20% 92%;
+  --sidebar-ring: 28 60% 65%;
+
+  --chart-1: 28 60% 55%;
   --chart-2: 173 58% 39%;
   --chart-3: 142 71% 45%;
   --chart-4: 43 74% 66%;
-  --chart-5: 0 84% 60%;
+  --chart-5: 0 72% 55%;
 
   --app-font-sans: 'Inter', sans-serif;
   --app-font-serif: Georgia, serif;
   --app-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --app-font-display: 'Inter', sans-serif;
-  
+
   --radius: 0.5rem;
 }
 
+/* ─── DARK MODE — Deep black + purple/blue wave aesthetic ─── */
 .dark {
-  --background: 224 71% 4%;
-  --foreground: 210 40% 98%;
-  --border: 215 27.9% 16.9%;
-  
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --card-border: 215 27.9% 16.9%;
-  
-  --sidebar: 222.2 84% 4.9%;
-  --sidebar-foreground: 210 40% 98%;
-  --sidebar-border: 215 27.9% 16.9%;
-  --sidebar-primary: 244 47% 60%;
-  --sidebar-primary-foreground: 210 40% 98%;
-  --sidebar-accent: 215 27.9% 16.9%;
-  --sidebar-accent-foreground: 210 40% 98%;
-  --sidebar-ring: 244 47% 60%;
+  /* Page background: near-black with a hint of navy */
+  --background: 240 20% 5%;  /* #0A0B14 */
+  --foreground: 240 15% 90%; /* soft blue-white */
 
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --popover-border: 215 27.9% 16.9%;
+  --border: 240 15% 14%;
+  --input: 240 15% 12%;
+  --ring: 252 65% 68%;
 
-  --primary: 244 47% 60%;
-  --primary-foreground: 210 40% 98%;
-  
-  --secondary: 215 27.9% 16.9%;
-  --secondary-foreground: 210 40% 98%;
-  
-  --muted: 215 27.9% 16.9%;
-  --muted-foreground: 217.9 10.6% 64.9%;
-  
-  --accent: 215 27.9% 16.9%;
-  --accent-foreground: 210 40% 98%;
-  
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
+  /* Cards: dark navy */
+  --card: 240 18% 9%;
+  --card-foreground: 240 15% 88%;
+  --card-border: 240 15% 14%;
 
-  --input: 215 27.9% 16.9%;
-  --ring: 244 47% 60%;
+  --popover: 240 18% 9%;
+  --popover-foreground: 240 15% 88%;
+  --popover-border: 240 15% 14%;
+
+  /* Primary: purple-blue (from the wave aesthetic) */
+  --primary: 252 65% 68%;    /* #7B6CF6 */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 240 15% 14%;
+  --secondary-foreground: 240 15% 80%;
+
+  --muted: 240 15% 12%;
+  --muted-foreground: 240 10% 55%;
+
+  --accent: 252 40% 20%;
+  --accent-foreground: 252 80% 85%;
+
+  --destructive: 0 55% 45%;
+  --destructive-foreground: 0 0% 98%;
+
+  /* Sidebar: slightly lighter than pure black, still very dark */
+  --sidebar: 240 22% 7%;
+  --sidebar-foreground: 240 15% 85%;
+  --sidebar-border: 240 20% 12%;
+  --sidebar-primary: 252 65% 68%;   /* purple accent */
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 20% 12%;
+  --sidebar-accent-foreground: 252 80% 80%;
+  --sidebar-ring: 252 65% 68%;
+
+  --chart-1: 252 65% 68%;
+  --chart-2: 195 80% 55%;
+  --chart-3: 142 60% 45%;
+  --chart-4: 43 74% 60%;
+  --chart-5: 0 72% 55%;
 }
 
 @layer base {
@@ -171,8 +187,15 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
   }
+}
+
+/* Dark mode wave background for the page area */
+.dark main {
+  background: radial-gradient(ellipse at 80% 20%, rgba(123, 108, 246, 0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 20% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+              hsl(var(--background));
 }
