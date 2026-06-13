@@ -1,6 +1,6 @@
-# [Project name]
+# Hirelytics
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+AI-powered smart resume shortlisting system that scores candidates on skill synergy, velocity potential, and verified proof of work — helping HR teams hire faster and more fairly.
 
 ## Run & Operate
 
