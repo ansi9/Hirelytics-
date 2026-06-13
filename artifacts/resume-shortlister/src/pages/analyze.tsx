@@ -63,7 +63,7 @@ export function Analyze() {
     <div className="space-y-6 max-w-4xl mx-auto">
       <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
         <h1 className="text-2xl font-bold tracking-tight text-slate-800" data-testid="text-analyze-title">Batch Analysis</h1>
-        <p className="text-slate-500 text-sm mt-1" data-testid="text-analyze-subtitle">Trigger AI scoring on pending candidates for a specific job.</p>
+        <p className="text-slate-500 text-sm mt-1" data-testid="text-analyze-subtitle">Score and rank pending candidates for a specific job.</p>
       </div>
 
       <Card className="shadow-sm border-0">

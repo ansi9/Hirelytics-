@@ -174,7 +174,7 @@ export function CandidateDetail() {
           <Card className="shadow-sm border-0">
             <CardHeader className="pb-2 border-b border-slate-100">
               <CardTitle className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                <Target className="w-5 h-5 text-blue-500" /> AI Assessment
+                <Target className="w-5 h-5 text-blue-500" /> Candidate Assessment
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-6 pb-8">

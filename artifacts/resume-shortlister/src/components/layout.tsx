@@ -42,7 +42,7 @@ export function Layout({ children }: LayoutProps) {
   ];
 
   const reportItems = [
-    { href: "/analyze", label: "AI Reports", icon: TrendingUp },
+    { href: "/analyze", label: "Insights", icon: TrendingUp },
     { href: "/jobs", label: "Pipeline View", icon: FileText },
   ];
 
