@@ -85,7 +85,7 @@ export function Layout({ children }: LayoutProps) {
           <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ background: "hsl(var(--sidebar-primary))" }}>
             <Target className="w-4 h-4" style={{ color: "hsl(var(--sidebar-primary-foreground))" }} />
           </div>
-          <span className="font-bold text-lg tracking-tight" style={{ color: "hsl(var(--sidebar-foreground))" }}>Shortlist.ai</span>
+          <span className="font-bold text-lg tracking-tight" style={{ color: "hsl(var(--sidebar-foreground))" }}>Hirelytics</span>
         </div>
 
         {/* Main Menu */}
@@ -168,7 +168,7 @@ export function Layout({ children }: LayoutProps) {
               <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ background: "hsl(var(--primary))" }}>
                 <Target className="text-white w-4 h-4" />
               </div>
-              <span className="font-bold text-lg">Shortlist.ai</span>
+              <span className="font-bold text-lg">Hirelytics</span>
             </div>
 
             <div className="hidden md:flex relative w-80">
