@@ -30,28 +30,6 @@
 
 ---
 
-## Project Structure
-
-```
-hirelytics/
-├── artifacts/
-│   ├── resume-shortlister/     # React + Vite frontend
-│   │   └── src/
-│   │       ├── pages/          # Dashboard, Jobs, Candidates, Analyze
-│   │       ├── components/     # Layout, UI primitives
-│   │       └── lib/            # Utilities, API client hooks
-│   └── api-server/             # Express 5 REST API
-│       └── src/
-│           ├── routes/         # Jobs, Candidates, Dashboard endpoints
-│           ├── lib/            # Scoring engine (analyzer.ts)
-│           └── db/             # Drizzle schema + seed
-├── lib/
-│   ├── api-spec/               # OpenAPI spec → codegen source of truth
-│   └── api-client-react/       # Generated React Query hooks + Zod schemas
-└── scripts/                    # Utility scripts
-```
-
----
 
 ## Getting Started
 
@@ -59,7 +37,7 @@ hirelytics/
 
 - Node.js 20+
 - pnpm 9+
-- PostgreSQL (or use the Replit built-in DB)
+- PostgreSQL 
 
 ### Install
 
@@ -129,12 +107,3 @@ Weighted combination: `0.5 × SkillSynergy + 0.3 × Velocity + 0.2 × ProofOfWor
 
 ---
 
-## Deployment
-
-The app is structured for Replit deployment out of the box. For standalone deployments, each service (frontend + API) can be containerised independently.
-
----
-
-## License
-
-MIT
