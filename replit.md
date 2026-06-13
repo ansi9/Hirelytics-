@@ -2,6 +2,8 @@
 
 AI-powered smart resume shortlisting system that scores candidates on skill synergy, velocity potential, and verified proof of work — helping HR teams hire faster and more fairly.
 
+**GitHub:** https://github.com/ansi9/Hirelytics-
+
 ## Run & Operate
 
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)

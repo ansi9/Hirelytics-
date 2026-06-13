@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import {
   LayoutDashboard, Users, Briefcase, Activity, Target, Bell,
   Settings, Search, BarChart2, BookMarked, TrendingUp, FileText,
-  Moon, Sun, Shield, UserCog, HelpCircle, LogOut, ChevronRight
+  Moon, Sun, Shield, UserCog, HelpCircle, LogOut, ChevronRight, Github
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useHealthCheck } from "@workspace/api-client-react";
@@ -139,8 +139,22 @@ export function Layout({ children }: LayoutProps) {
           </div>
         </nav>
 
-        {/* Footer: user + status */}
-        <div className="px-3 pb-4 pt-2 shrink-0 space-y-3" style={{ borderTop: "1px solid hsl(var(--sidebar-border))" }}>
+        {/* Footer: GitHub + user + status */}
+        <div className="px-3 pb-4 pt-2 shrink-0 space-y-2" style={{ borderTop: "1px solid hsl(var(--sidebar-border))" }}>
+          <a
+            href="https://github.com/ansi9/Hirelytics-"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg transition-all hover:opacity-80"
+            style={{ background: "hsl(var(--sidebar-accent))" }}
+          >
+            <Github className="w-4 h-4 shrink-0" style={{ color: "hsl(var(--sidebar-primary))" }} />
+            <div className="flex-1 min-w-0">
+              <div className="text-xs font-semibold truncate" style={{ color: "hsl(var(--sidebar-foreground))" }}>ansi9/Hirelytics-</div>
+              <div className="text-[10px] truncate" style={{ color: "hsl(var(--sidebar-foreground)/50%)" }}>github.com</div>
+            </div>
+          </a>
+
           <div className="flex items-center gap-3 px-3 py-2">
             <Avatar className="w-8 h-8 border" style={{ borderColor: "hsl(var(--sidebar-border))" }}>
               <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Admin" />
