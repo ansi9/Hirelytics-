@@ -1,0 +1,9 @@
+{
+  "rootDirectory": "artifacts/resume-shortlister",
+  "buildCommand": "cd ../../ && pnpm install --frozen-lockfile && pnpm --filter @workspace/resume-shortlister run build",
+  "outputDirectory": "dist/public",
+  "framework": null,
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api-proxy?path=$1" }
+  ]
+}
