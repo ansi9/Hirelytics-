@@ -1,7 +1,6 @@
 {
   "buildCommand": "pnpm run build",
-  "outputDirectory": "artifacts/resume-shortlister/dist",
+  "outputDirectory": "dist",
   "installCommand": "pnpm install",
-  "framework": "vite",
-  "rootDirectory": "artifacts/resume-shortlister"
+  "framework": "vite"
 }
