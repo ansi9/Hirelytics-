@@ -39,7 +39,7 @@ export function Analyze() {
     for (let i = 0; i < pendingCandidates.length; i++) {
       const candidate = pendingCandidates[i];
       try {
-        const result = await analyzeCandidate.mutateAsync({ data: { jobId: jobIdNum } });
+        const result = await analyzeCandidate.mutateAsync({ id: candidate.id, data: { jobId: jobIdNum } });
         setResults(prev => [{ candidateId: candidate.id, name: candidate.name, status: 'success', result }, ...prev]);
       } catch (err) {
         setResults(prev => [{ candidateId: candidate.id, name: candidate.name, status: 'error' }, ...prev]);
