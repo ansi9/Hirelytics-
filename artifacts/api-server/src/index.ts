@@ -23,3 +23,5 @@ app.listen(port, (err) => {
 
   logger.info({ port }, "Server listening");
 });
+
+module.exports = app;
