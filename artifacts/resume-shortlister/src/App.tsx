@@ -10,6 +10,7 @@ import { JobDetail } from "@/pages/jobs/[id]";
 import { Candidates } from "@/pages/candidates";
 import { CandidateDetail } from "@/pages/candidates/[id]";
 import { Analyze } from "@/pages/analyze";
+import { Shortlisted } from "@/pages/shortlisted";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ function Router() {
         <Route path="/candidates" component={Candidates} />
         <Route path="/candidates/:id" component={CandidateDetail} />
         <Route path="/analyze" component={Analyze} />
+        <Route path="/shortlisted" component={Shortlisted} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

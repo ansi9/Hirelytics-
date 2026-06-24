@@ -272,7 +272,7 @@ function SummaryCard({ candidateId, name, jobTitle, status, overallScore, verifi
   );
 }
 
-export function Candidates() {
+export function Candidates({ defaultStatus }: { defaultStatus?: string } = {}) {
   const { data: candidates, isLoading } = useListCandidates();
   const { data: jobs } = useListJobs();
   const [open, setOpen] = useState(false);
@@ -299,12 +299,14 @@ export function Candidates() {
   };
 
   const filtered = candidates
-    ?.filter((c) =>
-      blindMode
-        ? true
-        : c.name.toLowerCase().includes(search.toLowerCase()) ||
-          c.email.toLowerCase().includes(search.toLowerCase())
-    )
+    ?.filter((c) => {
+      if (defaultStatus && c.status !== defaultStatus) return false;
+      if (blindMode) return true;
+      return (
+        c.name.toLowerCase().includes(search.toLowerCase()) ||
+        c.email.toLowerCase().includes(search.toLowerCase())
+      );
+    })
     .sort((a, b) => b.overallScore - a.overallScore) ?? [];
 
   return (

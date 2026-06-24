@@ -20,13 +20,12 @@ const mainNav = [
   { href: "/jobs", label: "Job Postings", icon: Briefcase },
   { href: "/candidates", label: "Candidates", icon: Users },
   { href: "/analyze", label: "Batch Analyze", icon: Activity },
-  { href: "/jobs", label: "Shortlisted", icon: BookMarked },
-  { href: "/candidates", label: "Analytics", icon: BarChart2 },
+  { href: "/shortlisted", label: "Shortlisted", icon: BookMarked },
 ];
 
 const reportNav = [
   { href: "/analyze", label: "Insights", icon: TrendingUp },
-  { href: "/jobs", label: "Pipeline View", icon: FileText },
+  { href: "/candidates", label: "Pipeline View", icon: FileText },
 ];
 
 const settingsNav = [
@@ -123,20 +122,6 @@ export function Layout({ children }: LayoutProps) {
             </p>
             <div className="space-y-0.5">
               {mainNav.map((item) => (
-                <NavItem key={item.href + item.label} href={item.href} label={item.label} icon={item.icon} />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p
-              className="text-[10px] font-bold uppercase tracking-[0.08em] px-3 mb-1.5"
-              style={{ color: "hsl(var(--sidebar-foreground)/30%)" }}
-            >
-              Reports
-            </p>
-            <div className="space-y-0.5">
-              {reportNav.map((item) => (
                 <NavItem key={item.href + item.label} href={item.href} label={item.label} icon={item.icon} />
               ))}
             </div>
