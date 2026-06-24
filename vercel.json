@@ -1,6 +1,11 @@
 {
-  "buildCommand": "pnpm run build",
-  "outputDirectory": "dist",
-  "installCommand": "pnpm install",
-  "framework": "vite"
+  "buildCommand": "cd artifacts/resume-shortlister && npm run build",
+  "outputDirectory": "artifacts/resume-shortlister/dist",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "routes": [
+    {
+      "src": "^/(?!.*\\.).*$",
+      "destination": "/index.html"
+    }
+  ]
 }
