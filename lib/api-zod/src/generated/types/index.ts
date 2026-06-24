@@ -16,6 +16,8 @@ export * from './candidateFeedback';
 export * from './candidateInput';
 export * from './candidateRank';
 export * from './candidateStatus';
+export * from './candidateSummary';
+export * from './candidateSummaryVerdict';
 export * from './candidateUpdate';
 export * from './candidateUpdateStatus';
 export * from './dashboardSummary';

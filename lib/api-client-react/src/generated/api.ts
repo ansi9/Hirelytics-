@@ -27,6 +27,7 @@ import type {
   CandidateFeedback,
   CandidateInput,
   CandidateRank,
+  CandidateSummary,
   CandidateUpdate,
   DashboardSummary,
   HealthStatus,
@@ -1007,6 +1008,83 @@ export const useAnalyzeCandidate = <TError = ErrorType<unknown>,
       > => {
       return useMutation(getAnalyzeCandidateMutationOptions(options));
     }
+
+export const getGetCandidateSummaryUrl = (id: number,) => {
+
+
+
+
+  return `/api/candidates/${id}/summary`
+}
+
+/**
+ * @summary Get AI-generated pros/cons summary for a candidate
+ */
+export const getCandidateSummary = async (id: number, options?: RequestInit): Promise<CandidateSummary> => {
+
+  return customFetch<CandidateSummary>(getGetCandidateSummaryUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetCandidateSummaryQueryKey = (id: number,) => {
+    return [
+    `/api/candidates/${id}/summary`
+    ] as const;
+    }
+
+
+export const getGetCandidateSummaryQueryOptions = <TData = Awaited<ReturnType<typeof getCandidateSummary>>, TError = ErrorType<unknown>>(id: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCandidateSummary>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCandidateSummaryQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCandidateSummary>>> = ({ signal }) => getCandidateSummary(id, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCandidateSummary>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetCandidateSummaryQueryResult = NonNullable<Awaited<ReturnType<typeof getCandidateSummary>>>
+export type GetCandidateSummaryQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Get AI-generated pros/cons summary for a candidate
+ */
+
+export function useGetCandidateSummary<TData = Awaited<ReturnType<typeof getCandidateSummary>>, TError = ErrorType<unknown>>(
+ id: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCandidateSummary>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetCandidateSummaryQueryOptions(id,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
 
 export const getGetCandidateFeedbackUrl = (id: number,) => {
 

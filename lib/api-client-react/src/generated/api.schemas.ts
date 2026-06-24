@@ -207,6 +207,30 @@ export interface CandidateRank {
   status: string;
 }
 
+export type CandidateSummaryVerdict = typeof CandidateSummaryVerdict[keyof typeof CandidateSummaryVerdict];
+
+
+export const CandidateSummaryVerdict = {
+  shortlist: 'shortlist',
+  hold: 'hold',
+  reject: 'reject',
+} as const;
+
+export interface CandidateSummary {
+  candidateId: number;
+  overallScore: number;
+  skillSynergyScore: number;
+  velocityScore: number;
+  verdict: CandidateSummaryVerdict;
+  pros: string[];
+  cons: string[];
+  highlights: string[];
+  riskFlags: string[];
+  skillsFound: string[];
+  skillsMissing: string[];
+  verifiedProofOfWork: boolean;
+}
+
 export interface SkillGap {
   skill: string;
   jobTitle: string;

@@ -273,6 +273,29 @@ export const AnalyzeCandidateResponse = zod.object({
 
 
 /**
+ * @summary Get AI-generated pros/cons summary for a candidate
+ */
+export const GetCandidateSummaryParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const GetCandidateSummaryResponse = zod.object({
+  "candidateId": zod.number(),
+  "overallScore": zod.number(),
+  "skillSynergyScore": zod.number(),
+  "velocityScore": zod.number(),
+  "verdict": zod.enum(['shortlist', 'hold', 'reject']),
+  "pros": zod.array(zod.string()),
+  "cons": zod.array(zod.string()),
+  "highlights": zod.array(zod.string()),
+  "riskFlags": zod.array(zod.string()),
+  "skillsFound": zod.array(zod.string()),
+  "skillsMissing": zod.array(zod.string()),
+  "verifiedProofOfWork": zod.boolean()
+})
+
+
+/**
  * @summary Get AI-generated rejection feedback for a candidate
  */
 export const GetCandidateFeedbackParams = zod.object({

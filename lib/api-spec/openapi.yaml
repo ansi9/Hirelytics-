@@ -256,6 +256,25 @@ paths:
               schema:
                 $ref: "#/components/schemas/AnalysisResult"
 
+  /candidates/{id}/summary:
+    get:
+      operationId: getCandidateSummary
+      tags: [analysis]
+      summary: Get AI-generated pros/cons summary for a candidate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Candidate summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CandidateSummary"
+
   /candidates/{id}/feedback:
     get:
       operationId: getCandidateFeedback
@@ -602,6 +621,48 @@ components:
           type: number
         status:
           type: string
+
+    CandidateSummary:
+      type: object
+      required: [candidateId, overallScore, skillSynergyScore, velocityScore, verdict, pros, cons, highlights, riskFlags, skillsFound, skillsMissing, verifiedProofOfWork]
+      properties:
+        candidateId:
+          type: integer
+        overallScore:
+          type: number
+        skillSynergyScore:
+          type: number
+        velocityScore:
+          type: number
+        verdict:
+          type: string
+          enum: [shortlist, hold, reject]
+        pros:
+          type: array
+          items:
+            type: string
+        cons:
+          type: array
+          items:
+            type: string
+        highlights:
+          type: array
+          items:
+            type: string
+        riskFlags:
+          type: array
+          items:
+            type: string
+        skillsFound:
+          type: array
+          items:
+            type: string
+        skillsMissing:
+          type: array
+          items:
+            type: string
+        verifiedProofOfWork:
+          type: boolean
 
     SkillGap:
       type: object
