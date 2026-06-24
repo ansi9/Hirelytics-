@@ -1,0 +1,193 @@
+Based on the video provided, here is a structured data schema and system overview for your **Hirelytics** platform. This can be directly mapped to your Replit application state, database schemas, or frontend state management.
+
+### 1. Global Metrics (Dashboard Cards)
+
+```json
+{
+  "total_jobs": 4,
+  "total_applied": 8,
+  "shortlisted": 1,
+  "rejected": 1,
+  "pending": 6,
+  "avg_score": 0
+}
+
+```
+
+---
+
+### 2. Vacancy Statistics (Monthly Bar Chart Data)
+
+This dataset represents the `Application Sent` vs `Shortlisted` trends shown when hovering over the bar graph across the months.
+
+```json
+[
+  { "month": "Jan", "applications_sent": 400, "shortlisted": 240 },
+  { "month": "Feb", "applications_sent": 300, "shortlisted": 139 },
+  { "month": "Mar", "applications_sent": 200, "shortlisted": 980 },
+  { "month": "Apr", "applications_sent": 278, "shortlisted": 390 },
+  { "month": "May", "applications_sent": 189, "shortlisted": 480 },
+  { "month": "Jun", "applications_sent": 239, "shortlisted": 380 },
+  { "month": "Jul", "applications_sent": 349, "shortlisted": 430 }
+]
+
+```
+
+* **Hovering Logic implementation**: On hovering over a month's column bar, render a tooltip modal displaying: `Application Sent : {applications_sent}` and `Shortlisted : {shortlisted}`.
+
+---
+
+### 3. Pipeline Breakdown (Donut Chart Data)
+
+```json
+{
+  "shortlisted": 1,
+  "pending": 6,
+  "rejected": 1
+}
+
+```
+
+* **Hovering Logic implementation**: Hovering over sections of the donut chart dynamically updates the central label text to show the respective segment status name and its count (e.g., `Pending : 6`).
+
+---
+
+### 4. Job Posted Openings
+
+```json
+[
+  {
+    "id": "job_001",
+    "title": "Senior Frontend Engineer",
+    "code": "SE",
+    "type": "Full-Time",
+    "workplace": "Remote",
+    "status": "OPEN",
+    "tags": ["React", "TypeScript", "CSS"],
+    "applied_count": 2
+  },
+  {
+    "id": "job_002",
+    "title": "Machine Learning Engineer",
+    "code": "MA",
+    "type": "Full-Time",
+    "workplace": "Remote",
+    "status": "OPEN",
+    "tags": ["Python", "Machine Learning", "TensorFlow"],
+    "applied_count": 3
+  },
+  {
+    "id": "job_003",
+    "title": "Full Stack Engineer",
+    "code": "FU",
+    "type": "Full-Time",
+    "workplace": "Remote",
+    "status": "OPEN",
+    "tags": ["Node.js", "React", "PostgreSQL"],
+    "applied_count": 2
+  },
+  {
+    "id": "job_004",
+    "title": "UI/UX Designer",
+    "code": "UI",
+    "type": "Full-Time",
+    "workplace": "Remote",
+    "status": "OPEN",
+    "tags": ["Figma", "UI/UX", "Prototyping"],
+    "applied_count": 1
+  }
+]
+
+```
+
+---
+
+### 5. Candidate Applications List
+
+```json
+[
+  {
+    "id": "#001",
+    "name": "Alex Johnson",
+    "job_title": "Senior Frontend Engineer",
+    "status": "PENDING",
+    "score": 0,
+    "verified": true
+  },
+  {
+    "id": "#002",
+    "name": "Yuki Tanaka",
+    "job_title": "Senior Frontend Engineer",
+    "status": "PENDING",
+    "score": 0,
+    "verified": true
+  },
+  {
+    "id": "#003",
+    "name": "Sarah Chen",
+    "job_title": "Machine Learning Engineer",
+    "status": "PENDING",
+    "score": 0,
+    "verified": false
+  },
+  {
+    "id": "#004",
+    "name": "Marcus Williams",
+    "job_title": "Full Stack Engineer",
+    "status": "PENDING",
+    "score": 0,
+    "verified": true
+  },
+  {
+    "id": "#005",
+    "name": "Ananya Patel",
+    "job_title": "Full Stack Engineer",
+    "status": "PENDING",
+    "score": 0,
+    "verified": true
+  },
+  {
+    "id": "#006",
+    "name": "Isabella Rossi",
+    "job_title": "UI/UX Designer",
+    "status": "PENDING",
+    "score": 0,
+    "verified": false
+  },
+  {
+    "id": "#007",
+    "name": "Priya Sharma",
+    "job_title": "Senior Frontend Engineer",
+    "status": "REJECTED",
+    "score": 0,
+    "verified": true
+  },
+  {
+    "id": "#008",
+    "name": "Rohan Mehta",
+    "job_title": "Senior Frontend Engineer",
+    "status": "SHORTLISTED",
+    "score": 0,
+    "verified": true
+  }
+]
+
+```
+
+---
+
+### 6. Interactive Feature States (UI Controls)
+
+* **Blind Mode Toggle**:
+* `false` (Default): Displays Candidate Name, Profile Avatar Initials, and Verification Badges.
+* `true`: Obfuscates candidate identities. Replaces Names with generic text string layout (e.g., `Candidate #2`, `Candidate #3`) and masks specific profile identifiers to minimize recruitment bias.
+
+
+* **Theme Mode Settings Toggle**:
+* `Light Mode`: Uses a soft beige/grey background layout with clear colored metrics cards.
+* `Dark Mode`: Inverts colors to dark charcoal backgrounds and deep vibrant card colors.
+
+
+* **Modals Structure**:
+* **"Post New Job" Form**: Requires input bindings for `Job Title`, `Description`, `Required Skills (comma separated)`, and `Years of Experience`.
+* **"Add Candidate" Form**: Requires input fields for `Full Name`, `Email Address`, `Target Requisition (Dropdown Selection list)`, and a large multi-line text block for `Resume Content (Text)`.
