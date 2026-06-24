@@ -1,7 +1,6 @@
 {
-  "buildCommand": "cd artifacts/resume-shortlister && npm run build",
+  "buildCommand": "pnpm install && pnpm -C artifacts/resume-shortlister build",
   "outputDirectory": "artifacts/resume-shortlister/dist",
-  "installCommand": "pnpm install --frozen-lockfile",
   "routes": [
     {
       "src": "^/(?!.*\\.).*$",
