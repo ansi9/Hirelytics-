@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -68,115 +68,115 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* ─── LIGHT MODE — Beige (#DDD0C8) + Dark Grey (#323232) ─── */
+/* ─── LIGHT MODE — Clean white + Modern Cyan (#0891B2) ─── */
 :root {
-  /* Page background: warm beige */
-  --background: 28 22% 84%; /* #DDD0C8 */
-  --foreground: 0 0% 20%;   /* #323232 */
+  /* Page background: crisp white */
+  --background: 0 0% 100%; /* #FFFFFF */
+  --foreground: 0 0% 13%;   /* #1F1F1F */
 
-  --border: 28 15% 75%;
-  --input: 28 15% 78%;
-  --ring: 0 0% 20%;
+  --border: 0 0% 92%;
+  --input: 0 0% 96%;
+  --ring: 0 0% 13%;
 
-  /* Cards: slightly lighter than bg, cream-white */
-  --card: 30 30% 92%;        /* warm cream */
-  --card-foreground: 0 0% 20%;
-  --card-border: 28 15% 80%;
+  /* Cards: soft grey-white with 3D depth */
+  --card: 0 0% 98%;         /* subtle elevation */
+  --card-foreground: 0 0% 13%;
+  --card-border: 0 0% 90%;
 
-  --popover: 30 30% 94%;
-  --popover-foreground: 0 0% 20%;
-  --popover-border: 28 15% 78%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 13%;
+  --popover-border: 0 0% 88%;
 
-  /* Primary: dark grey as the action color */
-  --primary: 0 0% 20%;       /* #323232 */
-  --primary-foreground: 30 25% 94%;
+  /* Primary: Modern Cyan (professional tech color) */
+  --primary: 190 100% 35%;   /* #0891B2 - modern cyan */
+  --primary-foreground: 0 0% 100%;
 
-  --secondary: 28 18% 88%;
-  --secondary-foreground: 0 0% 25%;
+  --secondary: 190 80% 45%;  /* lighter cyan */
+  --secondary-foreground: 0 0% 100%;
 
-  --muted: 28 15% 88%;
+  --muted: 0 0% 88%;
   --muted-foreground: 0 0% 45%;
 
-  --accent: 28 18% 85%;
-  --accent-foreground: 0 0% 20%;
+  --accent: 190 100% 32%;    /* deep cyan for accents */
+  --accent-foreground: 0 0% 100%;
 
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 98%;
 
-  /* Sidebar: dark grey (#323232) */
-  --sidebar: 0 0% 20%;
-  --sidebar-foreground: 30 20% 92%;
-  --sidebar-border: 0 0% 16%;
-  --sidebar-primary: 28 60% 65%;   /* warm tan/sand for active items */
-  --sidebar-primary-foreground: 0 0% 10%;
-  --sidebar-accent: 0 0% 26%;
-  --sidebar-accent-foreground: 30 20% 92%;
-  --sidebar-ring: 28 60% 65%;
+  /* Sidebar: modern dark navy */
+  --sidebar: 210 40% 13%;    /* sleek dark blue */
+  --sidebar-foreground: 0 0% 95%;
+  --sidebar-border: 210 30% 18%;
+  --sidebar-primary: 190 100% 45%;   /* cyan accent */
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 210 30% 20%;
+  --sidebar-accent-foreground: 190 100% 50%;
+  --sidebar-ring: 190 100% 45%;
 
-  --chart-1: 28 60% 55%;
-  --chart-2: 173 58% 39%;
-  --chart-3: 142 71% 45%;
-  --chart-4: 43 74% 66%;
-  --chart-5: 0 72% 55%;
+  --chart-1: 190 100% 35%;   /* cyan */
+  --chart-2: 200 80% 45%;    /* blue */
+  --chart-3: 268 79% 58%;    /* purple accent */
+  --chart-4: 160 84% 39%;    /* teal */
+  --chart-5: 0 72% 55%;      /* red for warnings */
 
   --app-font-sans: 'Inter', sans-serif;
   --app-font-serif: Georgia, serif;
   --app-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --app-font-display: 'Inter', sans-serif;
 
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 }
 
-/* ─── DARK MODE — Deep black + purple/blue wave aesthetic ─── */
+/* ─── DARK MODE — Deep navy + Cyan wave aesthetic with 3D depth ─── */
 .dark {
-  /* Page background: near-black with a hint of navy */
-  --background: 240 20% 5%;  /* #0A0B14 */
-  --foreground: 240 15% 90%; /* soft blue-white */
+  /* Page background: deep navy (professional dark) */
+  --background: 210 35% 8%;  /* #0C1428 - deep navy */
+  --foreground: 0 0% 93%;    /* soft white */
 
-  --border: 240 15% 14%;
-  --input: 240 15% 12%;
-  --ring: 252 65% 68%;
+  --border: 210 30% 16%;
+  --input: 210 30% 12%;
+  --ring: 190 100% 50%;
 
-  /* Cards: dark navy */
-  --card: 240 18% 9%;
-  --card-foreground: 240 15% 88%;
-  --card-border: 240 15% 14%;
+  /* Cards: elevated dark navy with glassmorphism */
+  --card: 210 35% 11%;       /* slightly lighter, creates depth */
+  --card-foreground: 0 0% 92%;
+  --card-border: 210 30% 18%;
 
-  --popover: 240 18% 9%;
-  --popover-foreground: 240 15% 88%;
-  --popover-border: 240 15% 14%;
+  --popover: 210 35% 11%;
+  --popover-foreground: 0 0% 92%;
+  --popover-border: 210 30% 16%;
 
-  /* Primary: purple-blue (from the wave aesthetic) */
-  --primary: 252 65% 68%;    /* #7B6CF6 */
-  --primary-foreground: 0 0% 100%;
+  /* Primary: Bright Cyan (stands out beautifully in dark mode) */
+  --primary: 190 100% 50%;   /* #00D9FF - vibrant cyan */
+  --primary-foreground: 210 35% 8%;
 
-  --secondary: 240 15% 14%;
-  --secondary-foreground: 240 15% 80%;
+  --secondary: 210 30% 18%;
+  --secondary-foreground: 190 100% 50%;
 
-  --muted: 240 15% 12%;
-  --muted-foreground: 240 10% 55%;
+  --muted: 210 30% 14%;
+  --muted-foreground: 210 15% 55%;
 
-  --accent: 252 40% 20%;
-  --accent-foreground: 252 80% 85%;
+  --accent: 190 100% 48%;    /* slightly darker cyan */
+  --accent-foreground: 210 35% 8%;
 
   --destructive: 0 55% 45%;
   --destructive-foreground: 0 0% 98%;
 
-  /* Sidebar: slightly lighter than pure black, still very dark */
-  --sidebar: 240 22% 7%;
-  --sidebar-foreground: 240 15% 85%;
-  --sidebar-border: 240 20% 12%;
-  --sidebar-primary: 252 65% 68%;   /* purple accent */
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 240 20% 12%;
-  --sidebar-accent-foreground: 252 80% 80%;
-  --sidebar-ring: 252 65% 68%;
+  /* Sidebar: very dark with cyan highlights */
+  --sidebar: 210 40% 6%;     /* darker than card for contrast */
+  --sidebar-foreground: 0 0% 90%;
+  --sidebar-border: 210 35% 12%;
+  --sidebar-primary: 190 100% 50%;   /* bright cyan */
+  --sidebar-primary-foreground: 210 35% 8%;
+  --sidebar-accent: 210 35% 14%;
+  --sidebar-accent-foreground: 190 100% 52%;
+  --sidebar-ring: 190 100% 50%;
 
-  --chart-1: 252 65% 68%;
-  --chart-2: 195 80% 55%;
-  --chart-3: 142 60% 45%;
-  --chart-4: 43 74% 60%;
-  --chart-5: 0 72% 55%;
+  --chart-1: 190 100% 50%;   /* cyan */
+  --chart-2: 195 100% 48%;   /* bright blue */
+  --chart-3: 268 79% 68%;    /* purple accent */
+  --chart-4: 160 95% 50%;    /* bright teal */
+  --chart-5: 0 72% 60%;      /* red for warnings */
 }
 
 @layer base {
@@ -189,13 +189,160 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
+    @apply font-display font-bold;
   }
 }
 
-/* Dark mode wave background for the page area */
+/* ═══════════════════════════════════════════════════════════════
+   🎨 3D & GLASSMORPHISM EFFECTS FOR PROFESSIONAL DEPTH
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Light mode: Soft elevated cards with subtle 3D depth */
+@layer components {
+  .card-3d-light {
+    @apply bg-card border border-card-border rounded-lg;
+    box-shadow: 
+      0 1px 2px rgba(0, 0, 0, 0.03),
+      0 4px 8px rgba(0, 0, 0, 0.05),
+      0 10px 20px rgba(0, 0, 0, 0.07);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  }
+
+  .card-3d-light:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.04),
+      0 8px 16px rgba(0, 0, 0, 0.08),
+      0 20px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Dark mode: Deep glassmorphism with cyan glow */
+  .card-3d-dark {
+    @apply bg-card border border-card-border rounded-lg;
+    box-shadow: 
+      0 1px 2px rgba(0, 0, 0, 0.2),
+      0 4px 8px rgba(0, 13, 27, 0.3),
+      0 10px 30px rgba(0, 217, 255, 0.08);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    border-color: rgba(0, 217, 255, 0.1);
+  }
+
+  .card-3d-dark:hover {
+    transform: translateY(-6px);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      0 8px 16px rgba(0, 13, 27, 0.4),
+      0 25px 50px rgba(0, 217, 255, 0.15);
+    border-color: rgba(0, 217, 255, 0.2);
+  }
+
+  /* Buttons with 3D depth */
+  .btn-3d {
+    position: relative;
+    transition: all 0.2s ease-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .btn-3d:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-3d:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Primary cyan button glow in dark mode */
+  .dark .btn-primary-glow {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(190, 100%, 45%));
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .dark .btn-primary-glow:hover {
+    box-shadow: 0 0 30px rgba(0, 217, 255, 0.5), 0 8px 24px rgba(0, 217, 255, 0.2);
+  }
+
+  /* Gradient backgrounds for header/hero sections */
+  .gradient-primary-dark {
+    background: linear-gradient(135deg, 
+      hsl(210, 35%, 11%) 0%,
+      hsl(210, 40%, 13%) 50%,
+      hsl(200, 50%, 15%) 100%);
+  }
+
+  .gradient-primary-light {
+    background: linear-gradient(135deg, 
+      hsl(0, 0%, 100%) 0%,
+      hsl(190, 50%, 96%) 100%);
+  }
+
+  /* Glassmorphic panel */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.75rem;
+  }
+
+  .dark .glass-panel {
+    background: rgba(12, 20, 40, 0.5);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(0, 217, 255, 0.1);
+  }
+
+  /* Elevated score/stat boxes with gradient */
+  .stat-card-3d {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .dark .stat-card-3d::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), transparent);
+    pointer-events: none;
+    border-radius: 50%;
+  }
+
+  .stat-card-3d:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  /* Smooth transitions for all interactive elements */
+  button, a, input, select, textarea {
+    transition: all 0.2s ease-out;
+  }
+}
+
+/* Dark mode: Cyan wave background for visual interest */
 .dark main {
-  background: radial-gradient(ellipse at 80% 20%, rgba(123, 108, 246, 0.06) 0%, transparent 50%),
-              radial-gradient(ellipse at 20% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-              hsl(var(--background));
+  background: 
+    radial-gradient(ellipse at 80% 20%, rgba(0, 217, 255, 0.05) 0%, transparent 40%),
+    radial-gradient(ellipse at 20% 80%, rgba(0, 147, 180, 0.03) 0%, transparent 50%),
+    hsl(var(--background));
+  position: relative;
+}
+
+/* Light mode: Subtle cyan accent gradient */
+@media (prefers-color-scheme: light) {
+  main {
+    background:
+      radial-gradient(ellipse at 80% 20%, rgba(8, 145, 178, 0.02) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 80%, rgba(8, 145, 178, 0.01) 0%, transparent 60%),
+      hsl(var(--background));
+  }
 }
