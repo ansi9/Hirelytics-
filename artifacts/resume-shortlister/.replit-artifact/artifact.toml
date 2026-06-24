@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "Smart Resume Shortlisting System"
+title = "Hirelytics"
 version = "1.0.0"
 id = "artifacts/resume-shortlister"
 router = "path"

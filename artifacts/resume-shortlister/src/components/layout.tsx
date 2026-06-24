@@ -21,12 +21,10 @@ const mainNav = [
   { href: "/candidates", label: "Candidates", icon: Users },
   { href: "/analyze", label: "Batch Analyze", icon: Activity },
   { href: "/shortlisted", label: "Shortlisted", icon: BookMarked },
+  { href: "/analytics", label: "Analytics", icon: BarChart2 },
 ];
 
-const reportNav = [
-  { href: "/analyze", label: "Insights", icon: TrendingUp },
-  { href: "/candidates", label: "Pipeline View", icon: FileText },
-];
+const reportNav: { href: string; label: string; icon: React.ComponentType<{ className?: string }> }[] = [];
 
 const settingsNav = [
   { label: "Profile", icon: UserCog },
