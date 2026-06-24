@@ -1,224 +1,439 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGetDashboardSummary, useGetTopCandidates, useGetSkillGaps } from "@workspace/api-client-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
-import { BarChart as BarChartIcon, Users, CheckCircle, Clock, XCircle, TrendingUp, Briefcase, FileText, Target, MoreHorizontal, Eye } from "lucide-react";
+import {
+  Users, CheckCircle, Clock, XCircle, Briefcase, Target,
+  Eye, Play, X, ChevronRight, Zap, ArrowUpRight
+} from "lucide-react";
 import { Link } from "wouter";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
+  ResponsiveContainer, PieChart, Pie, Cell, Legend
+} from "recharts";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
+const PIE_COLORS = ["#0ea5e9", "#f59e0b", "#ef4444"];
+
+const barData = [
+  { month: "Jan", apps: 38, picked: 14 },
+  { month: "Feb", apps: 52, picked: 21 },
+  { month: "Mar", apps: 91, picked: 38 },
+  { month: "Apr", apps: 44, picked: 19 },
+  { month: "May", apps: 67, picked: 29 },
+  { month: "Jun", apps: 78, picked: 34 },
+  { month: "Jul", apps: 55, picked: 22 },
+];
+
+function VideoModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-3xl mx-4 rounded-2xl overflow-hidden shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 z-10 p-1.5 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors"
+        >
+          <X className="w-4 h-4" />
+        </button>
+        <video
+          src="/demo.mp4"
+          autoPlay
+          controls
+          className="w-full aspect-video bg-black"
+        />
+      </div>
+    </div>
+  );
+}
 
 export function Dashboard() {
   const { data: summary, isLoading: isLoadingSummary } = useGetDashboardSummary();
   const { data: topCandidates, isLoading: isLoadingTop } = useGetTopCandidates();
-  const { data: skillGaps, isLoading: isLoadingGaps } = useGetSkillGaps();
+  const [showVideo, setShowVideo] = useState(false);
 
-  // Mock chart data based on summary for visuals
-  const barData = [
-    { name: 'Jan', sent: 400, shortlisted: 240 },
-    { name: 'Feb', sent: 300, shortlisted: 139 },
-    { name: 'Mar', sent: 200, shortlisted: 980 },
-    { name: 'Apr', sent: 278, shortlisted: 390 },
-    { name: 'May', sent: 189, shortlisted: 480 },
-    { name: 'Jun', sent: 239, shortlisted: 380 },
-    { name: 'Jul', sent: 349, shortlisted: 430 },
-  ];
+  const pieData = summary
+    ? [
+        { name: "Shortlisted", value: summary.shortlisted || 0 },
+        { name: "Pending", value: summary.pending || 0 },
+        { name: "Rejected", value: summary.rejected || 0 },
+      ].filter((d) => d.value > 0)
+    : [];
 
-  const pieData = summary ? [
-    { name: 'Shortlisted', value: summary.shortlisted },
-    { name: 'Pending', value: summary.pending },
-    { name: 'Rejected', value: summary.rejected },
-  ] : [];
-
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'shortlisted': return 'bg-emerald-100 text-emerald-700';
-      case 'rejected': return 'bg-red-100 text-red-700';
-      case 'analyzed': return 'bg-blue-100 text-blue-700';
-      default: return 'bg-amber-100 text-amber-700';
+  const getStatusBadge = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case "shortlisted":
+        return "bg-emerald-500/15 text-emerald-400 border-emerald-500/20";
+      case "rejected":
+        return "bg-red-500/15 text-red-400 border-red-500/20";
+      case "analyzed":
+        return "bg-sky-500/15 text-sky-400 border-sky-500/20";
+      default:
+        return "bg-amber-500/15 text-amber-400 border-amber-500/20";
     }
   };
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center mb-2">
+      {showVideo && <VideoModal onClose={() => setShowVideo(false)} />}
+
+      {/* Page header */}
+      <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-800" data-testid="text-dashboard-title">Dashboard</h1>
-          <p className="text-muted-foreground text-sm" data-testid="text-dashboard-subtitle">Overview of recruitment activities</p>
+          <h1 className="text-xl font-semibold tracking-tight" data-testid="text-dashboard-title">
+            Hiring Pipeline
+          </h1>
+          <p className="text-sm text-muted-foreground mt-0.5" data-testid="text-dashboard-subtitle">
+            Live overview · updated just now
+          </p>
         </div>
+        <Button
+          variant="outline"
+          size="sm"
+          className="gap-2 text-xs border-dashed"
+          onClick={() => setShowVideo(true)}
+        >
+          <Play className="w-3 h-3 fill-current text-primary" />
+          Watch demo
+        </Button>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
-        <StatCard title="Total Jobs" value={summary?.totalJobs} icon={Briefcase} colorClass="bg-blue-100 text-blue-600" isLoading={isLoadingSummary} testId="total-jobs" />
-        <StatCard title="Total Applied" value={summary?.totalCandidates} icon={Users} colorClass="bg-teal-100 text-teal-600" isLoading={isLoadingSummary} testId="total-candidates" />
-        <StatCard title="Shortlisted" value={summary?.shortlisted} icon={CheckCircle} colorClass="bg-emerald-100 text-emerald-600" isLoading={isLoadingSummary} testId="shortlisted" />
-        <StatCard title="Rejected" value={summary?.rejected} icon={XCircle} colorClass="bg-red-100 text-red-600" isLoading={isLoadingSummary} testId="rejected" />
-        <StatCard title="Pending" value={summary?.pending} icon={Clock} colorClass="bg-amber-100 text-amber-600" isLoading={isLoadingSummary} testId="pending" />
-        <StatCard title="Avg Score" value={summary?.averageScore ? `${summary.averageScore.toFixed(0)}` : undefined} icon={Target} colorClass="bg-purple-100 text-purple-600" isLoading={isLoadingSummary} testId="avg-score" />
+      {/* Stats row */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <MetricCard
+          label="Open Roles"
+          value={summary?.totalJobs}
+          icon={Briefcase}
+          accent="cyan"
+          isLoading={isLoadingSummary}
+          testId="total-jobs"
+        />
+        <MetricCard
+          label="Total Applied"
+          value={summary?.totalCandidates}
+          icon={Users}
+          accent="blue"
+          isLoading={isLoadingSummary}
+          testId="total-candidates"
+        />
+        <MetricCard
+          label="Shortlisted"
+          value={summary?.shortlisted}
+          icon={CheckCircle}
+          accent="green"
+          isLoading={isLoadingSummary}
+          testId="shortlisted"
+        />
+        <MetricCard
+          label="Rejected"
+          value={summary?.rejected}
+          icon={XCircle}
+          accent="red"
+          isLoading={isLoadingSummary}
+          testId="rejected"
+        />
+        <MetricCard
+          label="Pending"
+          value={summary?.pending}
+          icon={Clock}
+          accent="amber"
+          isLoading={isLoadingSummary}
+          testId="pending"
+        />
+        <MetricCard
+          label="Avg Score"
+          value={summary?.averageScore ? `${summary.averageScore.toFixed(0)}` : undefined}
+          icon={Target}
+          accent="purple"
+          isLoading={isLoadingSummary}
+          testId="avg-score"
+        />
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
-        <Card className="col-span-2 shadow-sm border-0" data-testid="card-vacancy-stats">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <div>
-              <CardTitle className="text-lg">Vacancy Statistics</CardTitle>
-              <CardDescription>Application trends over time</CardDescription>
+      {/* Middle row: Chart + Top performers + Demo */}
+      <div className="grid gap-4 lg:grid-cols-5">
+        {/* Bar chart */}
+        <Card className="lg:col-span-3 border-border/50" data-testid="card-vacancy-stats">
+          <CardHeader className="pb-2">
+            <div className="flex items-start justify-between">
+              <div>
+                <CardTitle className="text-sm font-semibold">Application Volume</CardTitle>
+                <CardDescription className="text-xs mt-0.5">Applications vs shortlisted, last 7 months</CardDescription>
+              </div>
+              <Badge variant="outline" className="text-[10px] px-2 py-0.5 border-primary/30 text-primary">
+                <Zap className="w-2.5 h-2.5 mr-1" />
+                Live
+              </Badge>
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="h-[300px] w-full mt-4">
+          <CardContent className="pt-0">
+            <div className="h-52 w-full mt-2">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={barData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} dy={10} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} />
-                  <RechartsTooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
-                  <Legend iconType="circle" wrapperStyle={{ fontSize: '12px', paddingTop: '20px' }} />
-                  <Bar dataKey="sent" name="Application Sent" fill="#0D9488" radius={[4, 4, 0, 0]} maxBarSize={40} />
-                  <Bar dataKey="shortlisted" name="Shortlisted" fill="#3B82F6" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                <BarChart data={barData} margin={{ top: 4, right: 4, left: -24, bottom: 0 }} barGap={2}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                  <XAxis
+                    dataKey="month"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
+                    dy={8}
+                  />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
+                  <RechartsTooltip
+                    cursor={{ fill: "hsl(var(--muted)/0.4)" }}
+                    contentStyle={{
+                      background: "hsl(var(--card))",
+                      border: "1px solid hsl(var(--border))",
+                      borderRadius: "8px",
+                      fontSize: 12,
+                    }}
+                  />
+                  <Bar dataKey="apps" name="Applications" fill="hsl(var(--primary)/0.3)" radius={[3, 3, 0, 0]} maxBarSize={28} />
+                  <Bar dataKey="picked" name="Shortlisted" fill="hsl(var(--primary))" radius={[3, 3, 0, 0]} maxBarSize={28} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="col-span-1 shadow-sm border-0" data-testid="card-job-posted">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <div>
-              <CardTitle className="text-lg">Top Candidates</CardTitle>
-              <CardDescription>Highest scoring candidates</CardDescription>
+        {/* Top candidates */}
+        <Card className="lg:col-span-2 border-border/50" data-testid="card-job-posted">
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-semibold">Top Scorers</CardTitle>
+              <Link href="/candidates">
+                <button className="flex items-center gap-1 text-[11px] text-primary hover:underline">
+                  All <ArrowUpRight className="w-3 h-3" />
+                </button>
+              </Link>
             </div>
-            <Link href="/candidates" className="text-sm text-blue-600 hover:underline">View All</Link>
+            <CardDescription className="text-xs">Highest ranked this cycle</CardDescription>
           </CardHeader>
-          <CardContent className="px-2">
+          <CardContent className="pt-0 space-y-1">
             {isLoadingTop ? (
-              <div className="space-y-4 p-4">
-                {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-12 w-full" />)}
-              </div>
+              [...Array(4)].map((_, i) => <Skeleton key={i} className="h-11 w-full rounded-lg" />)
             ) : topCandidates?.length ? (
-              <div className="space-y-1 mt-2">
-                {topCandidates.slice(0, 3).map((candidate, i) => (
-                  <div key={candidate.candidateId} className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition-colors">
-                    <div className="flex items-center gap-3">
-                      <Avatar className="h-10 w-10 border border-slate-100">
-                        <AvatarFallback className={`bg-blue-50 text-blue-700 font-semibold`}>
-                          {candidate.candidateName.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="font-semibold text-sm text-slate-800">{candidate.candidateName}</p>
-                        <p className="text-xs text-muted-foreground">{candidate.jobTitle}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="font-bold text-sm text-slate-700">{candidate.overallScore}</div>
-                      <Link href={`/candidates/${candidate.candidateId}`}>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-blue-600">
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                      </Link>
-                    </div>
+              topCandidates.slice(0, 4).map((c, i) => (
+                <div
+                  key={c.candidateId}
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-muted/50 transition-colors group"
+                >
+                  <span className="text-[11px] font-mono text-muted-foreground w-4 shrink-0">{i + 1}</span>
+                  <Avatar className="h-7 w-7 shrink-0">
+                    <AvatarFallback className="text-[11px] font-bold bg-primary/10 text-primary">
+                      {c.candidateName.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-semibold truncate">{c.candidateName}</p>
+                    <p className="text-[10px] text-muted-foreground truncate">{c.jobTitle}</p>
                   </div>
-                ))}
-              </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="text-sm font-bold tabular-nums text-primary">{c.overallScore}</span>
+                    <Link href={`/candidates/${c.candidateId}`}>
+                      <Eye className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                  </div>
+                </div>
+              ))
             ) : (
-              <div className="text-center py-8 text-muted-foreground">No top candidates found.</div>
+              <div className="py-8 text-center text-xs text-muted-foreground">
+                No candidates scored yet.
+                <br />
+                <Link href="/analyze">
+                  <span className="text-primary hover:underline cursor-pointer">Run batch analysis →</span>
+                </Link>
+              </div>
             )}
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
-        <Card className="col-span-2 shadow-sm border-0" data-testid="card-applications">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-lg">Recent Applications</CardTitle>
-            <Link href="/candidates" className="text-sm text-blue-600 hover:underline">View All</Link>
+      {/* Bottom row: Recent applications + Pipeline donut */}
+      <div className="grid gap-4 lg:grid-cols-5">
+        <Card className="lg:col-span-3 border-border/50" data-testid="card-applications">
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-semibold">Recent Applications</CardTitle>
+              <Link href="/candidates">
+                <button className="text-[11px] text-primary hover:underline flex items-center gap-1">
+                  View all <ChevronRight className="w-3 h-3" />
+                </button>
+              </Link>
+            </div>
           </CardHeader>
           <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left">
-                <thead className="text-xs text-slate-500 uppercase bg-slate-50/50 border-y">
-                  <tr>
-                    <th className="px-6 py-3 font-medium">No.</th>
-                    <th className="px-6 py-3 font-medium">Name</th>
-                    <th className="px-6 py-3 font-medium">Job Title</th>
-                    <th className="px-6 py-3 font-medium">Status</th>
-                    <th className="px-6 py-3 font-medium">Score</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {topCandidates?.slice(0, 4).map((candidate, i) => (
-                    <tr key={candidate.candidateId} className="bg-white border-b hover:bg-slate-50">
-                      <td className="px-6 py-4 text-slate-500 font-medium">#{(i + 1).toString().padStart(3, '0')}</td>
-                      <td className="px-6 py-4 font-semibold text-slate-800 flex items-center gap-2">
-                        {candidate.candidateName}
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="border-y border-border/50 bg-muted/30">
+                  <th className="px-5 py-2.5 text-left font-medium text-muted-foreground tracking-wide">#</th>
+                  <th className="px-5 py-2.5 text-left font-medium text-muted-foreground tracking-wide">Candidate</th>
+                  <th className="px-5 py-2.5 text-left font-medium text-muted-foreground tracking-wide hidden sm:table-cell">Role</th>
+                  <th className="px-5 py-2.5 text-left font-medium text-muted-foreground tracking-wide">Status</th>
+                  <th className="px-5 py-2.5 text-right font-medium text-muted-foreground tracking-wide">Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {isLoadingTop ? (
+                  [...Array(4)].map((_, i) => (
+                    <tr key={i}>
+                      <td colSpan={5} className="px-5 py-3">
+                        <Skeleton className="h-4 w-full" />
                       </td>
-                      <td className="px-6 py-4 text-slate-600">{candidate.jobTitle}</td>
-                      <td className="px-6 py-4">
-                        <span className={`px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-wider ${getStatusColor(candidate.status)}`}>
-                          {candidate.status}
+                    </tr>
+                  ))
+                ) : topCandidates?.length ? (
+                  topCandidates.slice(0, 5).map((c, i) => (
+                    <tr
+                      key={c.candidateId}
+                      className="border-b border-border/30 hover:bg-muted/20 transition-colors"
+                    >
+                      <td className="px-5 py-3 text-muted-foreground font-mono">{String(i + 1).padStart(2, "0")}</td>
+                      <td className="px-5 py-3 font-medium">{c.candidateName}</td>
+                      <td className="px-5 py-3 text-muted-foreground hidden sm:table-cell">{c.jobTitle}</td>
+                      <td className="px-5 py-3">
+                        <span
+                          className={`px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider border ${getStatusBadge(c.status)}`}
+                        >
+                          {c.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 font-semibold">{candidate.overallScore}</td>
+                      <td className="px-5 py-3 text-right font-bold tabular-nums">{c.overallScore}</td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={5} className="px-5 py-10 text-center text-muted-foreground">
+                      No applications yet.{" "}
+                      <Link href="/jobs">
+                        <span className="text-primary hover:underline cursor-pointer">Post a role →</span>
+                      </Link>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </CardContent>
         </Card>
 
-        <Card className="col-span-1 shadow-sm border-0">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Pipeline Breakdown</CardTitle>
-            <CardDescription>Status distribution</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[250px] w-full mt-4 flex items-center justify-center">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                    paddingAngle={5}
-                    dataKey="value"
-                  >
-                    {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <RechartsTooltip />
-                  <Legend verticalAlign="bottom" height={36} iconType="circle" />
-                </PieChart>
-              </ResponsiveContainer>
+        {/* Pipeline donut + video thumbnail */}
+        <div className="lg:col-span-2 space-y-4">
+          <Card className="border-border/50">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-semibold">Pipeline Breakdown</CardTitle>
+              <CardDescription className="text-xs">Status distribution across all candidates</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {pieData.length > 0 ? (
+                <div className="h-44">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={pieData}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={48}
+                        outerRadius={68}
+                        paddingAngle={3}
+                        dataKey="value"
+                      >
+                        {pieData.map((_, idx) => (
+                          <Cell key={idx} fill={PIE_COLORS[idx % PIE_COLORS.length]} />
+                        ))}
+                      </Pie>
+                      <RechartsTooltip
+                        contentStyle={{
+                          background: "hsl(var(--card))",
+                          border: "1px solid hsl(var(--border))",
+                          borderRadius: "8px",
+                          fontSize: 12,
+                        }}
+                      />
+                      <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: 11 }} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              ) : (
+                <div className="h-44 flex items-center justify-center text-xs text-muted-foreground">
+                  Awaiting first analysis run
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Video demo card */}
+          <button
+            onClick={() => setShowVideo(true)}
+            className="w-full relative rounded-xl overflow-hidden border border-border/50 aspect-video bg-muted/30 hover:border-primary/40 transition-all group"
+          >
+            <video
+              src="/demo.mp4"
+              muted
+              playsInline
+              className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity"
+            />
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+              <div className="w-10 h-10 rounded-full bg-primary/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <Play className="w-4 h-4 text-white fill-white ml-0.5" />
+              </div>
+              <span className="text-[11px] font-semibold text-white drop-shadow">Watch product demo</span>
             </div>
-          </CardContent>
-        </Card>
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
-function StatCard({ title, value, icon: Icon, isLoading, testId, colorClass }: { title: string, value?: string | number, icon: any, isLoading: boolean, testId: string, colorClass: string }) {
+function MetricCard({
+  label, value, icon: Icon, accent, isLoading, testId
+}: {
+  label: string;
+  value?: string | number;
+  icon: React.ComponentType<{ className?: string }>;
+  accent: "cyan" | "blue" | "green" | "red" | "amber" | "purple";
+  isLoading: boolean;
+  testId: string;
+}) {
+  const accentMap = {
+    cyan:   { bg: "bg-cyan-500/10",   text: "text-cyan-400",   border: "border-cyan-500/20" },
+    blue:   { bg: "bg-blue-500/10",   text: "text-blue-400",   border: "border-blue-500/20" },
+    green:  { bg: "bg-emerald-500/10",text: "text-emerald-400",border: "border-emerald-500/20" },
+    red:    { bg: "bg-red-500/10",    text: "text-red-400",    border: "border-red-500/20" },
+    amber:  { bg: "bg-amber-500/10",  text: "text-amber-400",  border: "border-amber-500/20" },
+    purple: { bg: "bg-purple-500/10", text: "text-purple-400", border: "border-purple-500/20" },
+  };
+  const a = accentMap[accent];
+
   return (
-    <Card data-testid={`stat-${testId}`} className="shadow-sm border-0 flex flex-col items-center justify-center py-6 hover:shadow-md transition-shadow">
+    <Card
+      data-testid={`stat-${testId}`}
+      className={`border ${a.border} bg-card/60 py-4 px-4`}
+    >
       {isLoading ? (
-        <Skeleton className="h-16 w-16 rounded-full mb-4" />
-      ) : (
-        <div className={`w-14 h-14 rounded-full flex items-center justify-center mb-4 ${colorClass}`}>
-          <Icon className="w-6 h-6" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-4 rounded" />
+          <Skeleton className="h-6 w-10" />
+          <Skeleton className="h-3 w-16" />
         </div>
+      ) : (
+        <>
+          <div className={`w-7 h-7 rounded-md flex items-center justify-center mb-3 ${a.bg}`}>
+            <Icon className={`w-3.5 h-3.5 ${a.text}`} />
+          </div>
+          <div className={`text-2xl font-bold tabular-nums ${a.text}`}>
+            {value ?? 0}
+          </div>
+          <div className="text-[11px] text-muted-foreground mt-0.5 font-medium">{label}</div>
+        </>
       )}
-      <div className="text-3xl font-bold text-slate-800 mb-1">
-        {isLoading ? <Skeleton className="h-8 w-16" /> : (value ?? 0)}
-      </div>
-      <div className="text-sm font-medium text-slate-500">{title}</div>
     </Card>
   );
 }
