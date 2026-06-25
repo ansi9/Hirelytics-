@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: hirelytics
+    env: static
+    buildCommand: npm install -g pnpm && pnpm install --no-frozen-lockfile && pnpm run build
+    staticPublishPath: artifacts/resume-shortlister/dist
+    rootDir: artifacts/resume-shortlister
